@@ -1149,8 +1149,9 @@ extern "C"
 #define ADC_CFGR_JQM ADC_CFGR_JQM_Msk                /*!< ADC group injected contexts queue mode */
 #define ADC_CFGR_AWD1SGL_Pos (22U)
 #define ADC_CFGR_AWD1SGL_Msk (0x1UL << ADC_CFGR_AWD1SGL_Pos) /*!< 0x00400000 */
-#define ADC_CFGR_AWD1SGL ADC_CFGR_AWD1SGL_Msk /*!< ADC analog watchdog 1 monitoring a single channel or all channels   \
-                                               */
+#define ADC_CFGR_AWD1SGL                                                                                               \
+    ADC_CFGR_AWD1SGL_Msk /*!< ADC analog watchdog 1 monitoring a single channel or all channels                        \
+                          */
 #define ADC_CFGR_AWD1EN_Pos (23U)
 #define ADC_CFGR_AWD1EN_Msk (0x1UL << ADC_CFGR_AWD1EN_Pos) /*!< 0x00800000 */
 #define ADC_CFGR_AWD1EN ADC_CFGR_AWD1EN_Msk /*!< ADC analog watchdog 1 enable on scope ADC group regular */
@@ -2236,15 +2237,17 @@ extern "C"
 #define ADC_CSR_EOC_MST ADC_CSR_EOC_MST_Msk /*!< ADC multimode master group regular end of unitary conversion flag */
 #define ADC_CSR_EOS_MST_Pos (3U)
 #define ADC_CSR_EOS_MST_Msk (0x1UL << ADC_CSR_EOS_MST_Pos) /*!< 0x00000008 */
-#define ADC_CSR_EOS_MST ADC_CSR_EOS_MST_Msk /*!< ADC multimode master group regular end of sequence conversions flag   \
-                                             */
+#define ADC_CSR_EOS_MST                                                                                                \
+    ADC_CSR_EOS_MST_Msk /*!< ADC multimode master group regular end of sequence conversions flag                       \
+                         */
 #define ADC_CSR_OVR_MST_Pos (4U)
 #define ADC_CSR_OVR_MST_Msk (0x1UL << ADC_CSR_OVR_MST_Pos) /*!< 0x00000010 */
 #define ADC_CSR_OVR_MST ADC_CSR_OVR_MST_Msk                /*!< ADC multimode master group regular overrun flag */
 #define ADC_CSR_JEOC_MST_Pos (5U)
 #define ADC_CSR_JEOC_MST_Msk (0x1UL << ADC_CSR_JEOC_MST_Pos) /*!< 0x00000020 */
-#define ADC_CSR_JEOC_MST ADC_CSR_JEOC_MST_Msk /*!< ADC multimode master group injected end of unitary conversion flag  \
-                                               */
+#define ADC_CSR_JEOC_MST                                                                                               \
+    ADC_CSR_JEOC_MST_Msk /*!< ADC multimode master group injected end of unitary conversion flag                       \
+                          */
 #define ADC_CSR_JEOS_MST_Pos (6U)
 #define ADC_CSR_JEOS_MST_Msk (0x1UL << ADC_CSR_JEOS_MST_Pos) /*!< 0x00000040 */
 #define ADC_CSR_JEOS_MST                                                                                               \
@@ -2260,8 +2263,9 @@ extern "C"
 #define ADC_CSR_AWD3_MST ADC_CSR_AWD3_MST_Msk                /*!< ADC multimode master analog watchdog 3 flag */
 #define ADC_CSR_JQOVF_MST_Pos (10U)
 #define ADC_CSR_JQOVF_MST_Msk (0x1UL << ADC_CSR_JQOVF_MST_Pos) /*!< 0x00000400 */
-#define ADC_CSR_JQOVF_MST ADC_CSR_JQOVF_MST_Msk /*!< ADC multimode master group injected contexts queue overflow flag  \
-                                                 */
+#define ADC_CSR_JQOVF_MST                                                                                              \
+    ADC_CSR_JQOVF_MST_Msk /*!< ADC multimode master group injected contexts queue overflow flag                        \
+                           */
 
 #define ADC_CSR_ADRDY_SLV_Pos (16U)
 #define ADC_CSR_ADRDY_SLV_Msk (0x1UL << ADC_CSR_ADRDY_SLV_Pos) /*!< 0x00010000 */
@@ -2280,8 +2284,9 @@ extern "C"
 #define ADC_CSR_OVR_SLV ADC_CSR_OVR_SLV_Msk                /*!< ADC multimode slave group regular overrun flag */
 #define ADC_CSR_JEOC_SLV_Pos (21U)
 #define ADC_CSR_JEOC_SLV_Msk (0x1UL << ADC_CSR_JEOC_SLV_Pos) /*!< 0x00200000 */
-#define ADC_CSR_JEOC_SLV ADC_CSR_JEOC_SLV_Msk /*!< ADC multimode slave group injected end of unitary conversion flag   \
-                                               */
+#define ADC_CSR_JEOC_SLV                                                                                               \
+    ADC_CSR_JEOC_SLV_Msk /*!< ADC multimode slave group injected end of unitary conversion flag                        \
+                          */
 #define ADC_CSR_JEOS_SLV_Pos (22U)
 #define ADC_CSR_JEOS_SLV_Msk (0x1UL << ADC_CSR_JEOS_SLV_Pos) /*!< 0x00400000 */
 #define ADC_CSR_JEOS_SLV                                                                                               \
@@ -2297,8 +2302,9 @@ extern "C"
 #define ADC_CSR_AWD3_SLV ADC_CSR_AWD3_SLV_Msk                /*!< ADC multimode slave analog watchdog 3 flag */
 #define ADC_CSR_JQOVF_SLV_Pos (26U)
 #define ADC_CSR_JQOVF_SLV_Msk (0x1UL << ADC_CSR_JQOVF_SLV_Pos) /*!< 0x04000000 */
-#define ADC_CSR_JQOVF_SLV ADC_CSR_JQOVF_SLV_Msk /*!< ADC multimode slave group injected contexts queue overflow flag   \
-                                                 */
+#define ADC_CSR_JQOVF_SLV                                                                                              \
+    ADC_CSR_JQOVF_SLV_Msk /*!< ADC multimode slave group injected contexts queue overflow flag                         \
+                           */
 
 /* Legacy defines */
 #define ADC_CSR_ADRDY_EOSMP_MST ADC_CSR_EOSMP_MST
@@ -2952,8 +2958,9 @@ extern "C"
 #define OPAMP_CSR_OPAMPxEN OPAMP_CSR_OPAMPxEN_Msk                /*!< OPAMP enable */
 #define OPAMP_CSR_FORCEVP_Pos (1U)
 #define OPAMP_CSR_FORCEVP_Msk (0x1UL << OPAMP_CSR_FORCEVP_Pos) /*!< 0x00000002 */
-#define OPAMP_CSR_FORCEVP OPAMP_CSR_FORCEVP_Msk /*!< Connect the internal references to the plus input of the OPAMPX   \
-                                                 */
+#define OPAMP_CSR_FORCEVP                                                                                              \
+    OPAMP_CSR_FORCEVP_Msk /*!< Connect the internal references to the plus input of the OPAMPX                         \
+                           */
 #define OPAMP_CSR_VPSEL_Pos (2U)
 #define OPAMP_CSR_VPSEL_Msk (0x3UL << OPAMP_CSR_VPSEL_Pos) /*!< 0x0000000C */
 #define OPAMP_CSR_VPSEL OPAMP_CSR_VPSEL_Msk                /*!< Non inverting input selection */
@@ -14622,18 +14629,6 @@ extern "C"
 #define WWDG_SR_EWIF_Msk (0x1UL << WWDG_SR_EWIF_Pos) /*!< 0x00000001 */
 #define WWDG_SR_EWIF WWDG_SR_EWIF_Msk                /*!<Early Wakeup Interrupt Flag */
 
-    /**
-     * @}
-     */
-
-    /**
-     * @}
-     */
-
-/** @addtogroup Exported_macros
- * @{
- */
-
 /****************************** ADC Instances *********************************/
 #define IS_ADC_ALL_INSTANCE(INSTANCE)                                                                                  \
     (((INSTANCE) == ADC1) || ((INSTANCE) == ADC2) || ((INSTANCE) == ADC3) || ((INSTANCE) == ADC4))
@@ -14963,10 +14958,6 @@ extern "C"
 /****************************** WWDG Instances ********************************/
 #define IS_WWDG_ALL_INSTANCE(INSTANCE) ((INSTANCE) == WWDG)
 
-/**
- * @}
- */
-
 /******************************************************************************/
 /*  For a painless codes migration between the STM32F3xx device product       */
 /*  lines, the aliases defined below are put in place to overcome the         */
@@ -15028,11 +15019,3 @@ extern "C"
 #endif /* __cplusplus */
 
 #endif /* __STM32F303xE_H */
-
-/**
- * @}
- */
-
-/**
- * @}
- */
