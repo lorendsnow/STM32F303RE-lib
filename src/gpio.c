@@ -64,3 +64,35 @@ void gpioa_set_mode(uint8_t port, GPIO_Mode mode)
         break;
     }
 }
+
+/**
+ * @brief   Enables the on-board LED by setting PA5 to output mode.
+ */
+void gpioa_enable_led(void)
+{
+    gpioa_set_mode(5, OUTPUT);
+}
+
+/**
+ * @brief   Turns on the on-board LED by setting PA5 to 1.
+ */
+void gpioa_led_on(void)
+{
+    GPIOA->ODR |= LED_PIN;
+}
+
+/**
+ * @brief   Turns off the on-board LED by setting PA5 to 0.
+ */
+void gpioa_led_off(void)
+{
+    GPIOA->ODR &= ~(LED_PIN);
+}
+
+/**
+ * @brief   Toggles the on-board LED by XOR'ing PA5.
+ */
+void gpioa_led_toggle(void)
+{
+    GPIOA->ODR ^= LED_PIN;
+}

@@ -53,6 +53,12 @@ typedef enum
 
 #define GPIOA ((GPIO_TypeDef *)GPIOA_BASE) ///< GPIOA pointer
 
+#define LED_PIN (1U << 5) ///< LED is PA5
+
 void gpioa_set_mode(uint8_t port, GPIO_Mode mode);
+void gpioa_enable_led(void);
+void gpioa_led_on(void);
+void gpioa_led_off(void);
+void gpioa_led_toggle(void);
 
 #endif /* GPIO_H */
