@@ -36,8 +36,8 @@
 #include "stm32f3xx.h"
 #include <stdint.h>
 
-#define RCC ((RCC_TypeDef *)RCC_BASE) ///< RCC peripheral pointer
-
 void rcc_enable_gpioa(void);
+void rcc_enable_gpiob(void);
+void rcc_enable_I2C1(void);
 
 #endif /* RCC_H */

@@ -33,9 +33,25 @@
 #include "rcc.h"
 
 /**
- * @brief   Enables the GPIO port A clock
+ * @brief   Enables the GPIO port A clock.
  */
 void rcc_enable_gpioa(void)
 {
     RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+}
+
+/**
+ * @brief   Enables the GPIO port B clock.
+ */
+void rcc_enable_gpiob(void)
+{
+    RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
+}
+
+/**
+ * @brief   Enables the I2C1 clock.
+ */
+void rcc_enable_I2C1(void)
+{
+    RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
 }
