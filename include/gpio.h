@@ -36,6 +36,8 @@
 #include "stm32f303xe.h"
 #include <stdint.h>
 
+#define LED_PIN (1U << 5) ///< LED is PA5
+
 /**
  * @brief   Definitions for GPIO modes
  * @note    | INPUT = Input mode
@@ -51,14 +53,56 @@ typedef enum
     ANALOG,
 } GPIO_Mode;
 
-#define GPIOA ((GPIO_TypeDef *)GPIOA_BASE) ///< GPIOA pointer
+/**
+ * @brief   Definitions for GPIO output types
+ */
+typedef enum
+{
+    PUSH_PULL,
+    OPEN_DRAIN,
+} Output_Type;
 
-#define LED_PIN (1U << 5) ///< LED is PA5
+/**
+ * @brief   Definitions for GPIO pull-up/pull-down mode
+ */
+typedef enum
+{
+    NONE,
+    PULL_UP,
+    PULL_DOWN,
+} PullUp_PullDown;
 
-void gpioa_set_mode(uint8_t port, GPIO_Mode mode);
+/**
+ * @brief   Definitions for alternate function mapping
+ */
+typedef enum
+{
+    AF0,
+    AF1,
+    AF2,
+    AF3,
+    AF4,
+    AF5,
+    AF6,
+    AF7,
+    AF8,
+    AF9,
+    AF10,
+    AF11,
+    AF12,
+    AF13,
+    AF14,
+    AF15,
+} Alt_Function;
+
+void gpio_map_alternate_fn(GPIO_TypeDef *GPIOx, uint8_t pin, Alt_Function fn);
+void gpio_set_mode(GPIO_TypeDef *GPIOx, uint8_t pin, GPIO_Mode mode);
+void gpio_set_output_type(GPIO_TypeDef *GPIOx, uint8_t pin, Output_Type type);
+void gpio_set_pullup_pulldown(GPIO_TypeDef *GPIOx, uint8_t pin, PullUp_PullDown pull_t);
 void gpioa_enable_led(void);
 void gpioa_led_on(void);
 void gpioa_led_off(void);
 void gpioa_led_toggle(void);
+void gpiob_use_I2C(void);
 
 #endif /* GPIO_H */
