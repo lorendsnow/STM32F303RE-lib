@@ -48,5 +48,6 @@ typedef enum
 } I2C_Mode;
 
 void I2C_init(I2C_TypeDef *I2Cx, I2C_Mode mode);
+void I2C_write_bytes(I2C_TypeDef *I2Cx, uint16_t target_addr, char *data, uint32_t len);
 
 #endif /* I2C_H */

@@ -73,6 +73,29 @@ void I2C_init(I2C_TypeDef *I2Cx, I2C_Mode mode)
 }
 
 /**
+ * @brief       Sets necessary I2C registers to perform a write operation.
+ * @param[in]   I2Cx: a defined I2C pointer (i.e., I2C1, I2C2, or I2C3)
+ * @param[in]   addr: target device 7 or 10-bit address
+ */
+static void I2C_set_CR2_reg_for_write(I2C_TypeDef *I2Cx, uint16_t addr)
+{
+    if (addr > 127) // we're using 10-bit addressing
+    {
+        I2Cx->CR2 |= I2C_CR2_ADD10;
+        I2Cx->CR2 |= ((uint32_t)addr);   // set I2C->CR2 bits 9:0 to target address
+        I2Cx->CR2 &= ~(I2C_CR2_HEAD10R); // send 10-bit address header
+    }
+    else // we're using 7-bit addressing
+    {
+        I2Cx->CR2 &= ~(I2C_CR2_ADD10);
+        I2Cx->CR2 |= ((uint32_t)addr << 1); // set I2C->CR2 bits 7:1 to target address
+        I2Cx->CR2 |= I2C_CR2_HEAD10R;       // send 7-bit address header
+    }
+
+    I2Cx->CR2 &= ~(I2C_CR2_RD_WRN); // 0 = controller requests a write transfer
+}
+
+/**
  * @brief       Set timing registers for an I2C instance to fast mode (400 kHz).
  * @param[in]   I2Cx: a defined I2C pointer (i.e., I2C1, I2C2, or I2C3)
  */
@@ -143,4 +166,74 @@ static void I2C_set_standard_timing(I2C_TypeDef *I2Cx)
     I2Cx->TIMINGR |= (1U << 0); // SCLL[7:0] (bits 7:0) = 0x13 = 0001 0011
     I2Cx->TIMINGR |= (1U << 1);
     I2Cx->TIMINGR |= (1U << 4);
+}
+
+/**
+ * @brief       Writes a number of bytes to the target device.
+ * @param[in]   I2Cx: a defined I2C pointer (i.e., I2C1, I2C2, or I2C3)
+ * @param[in]   target_addr: the target device's 7 or 10-bit device address
+ * @param[in]   data: address of data array to send
+ * @param[in]   len: length of data array
+ */
+void I2C_write_bytes(I2C_TypeDef *I2Cx, uint16_t target_addr, char *data, uint32_t len)
+{
+    if (target_addr > 1023)
+    {
+        return; // address is more than 10 bits; invalid
+    }
+
+    I2C_set_CR2_reg_for_write(I2Cx, target_addr);
+
+    I2C_recursive_transmit(I2Cx, data, len);
+}
+
+/**
+ * @brief       Recursively sends bytes to a target device until all data has been sent.
+ * @note        We use a recursive function because the F303RE NBYTES register is only 8 bits. So,
+ *              if we are sending 256 or more bytes, we need to continually reload NBYTES every 255
+ *              bytes until we have less than 256 bytes left to send.
+ * @param[in]   I2Cx: a defined I2C pointer (i.e., I2C1, I2C2, or I2C3)
+ * @param[in]   data: address of data array to send
+ * @param[in]   len: length of remaining data array (or full length of data array on initial
+ *              function call)
+ */
+static void I2C_recursive_transmit(I2C_TypeDef *I2Cx, char *data, uint32_t len)
+{
+    uint8_t n_bytes;
+
+    if (len < 0x100) // base case - we have less than 256 bytes left to send
+    {
+        n_bytes = len;
+        I2Cx->CR2 &= ~(I2C_CR2_RELOAD); // clear reload bit
+        I2Cx->CR2 |= I2C_CR2_AUTOEND;   // set automatic end mode to send STOP signal after n_bytes have been sent
+    }
+    else
+    {
+        n_bytes = 0xFF;
+    }
+
+    I2Cx->CR2 |= ((uint32_t)n_bytes << 16);
+    I2Cx->CR2 |= I2C_CR2_START;
+
+    for (int i = 0; i < n_bytes; i++)
+    {
+        if (I2Cx->ISR & I2C_ISR_NACKF) // error - we got a NACK from the target
+        {
+            return;
+        }
+
+        while (!(I2Cx->ISR & I2C_ISR_TXE)) // TXDR is not empty
+        {
+            ; // wait for previous bits in TXDR to send and clear
+        }
+
+        I2Cx->TXDR = *data++; // put next byte in the TXDR register
+    }
+
+    if ((n_bytes < 0xFF) || (len - n_bytes == 0)) // those were the last bytes
+    {
+        return;
+    }
+
+    I2C_recursive_transmit(I2Cx, data, len - 0xFF);
 }
